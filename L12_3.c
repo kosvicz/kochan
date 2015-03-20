@@ -9,7 +9,7 @@ unsigned int shift(unsigned int value, int n) {
     return value;
 }
 
-int mian(void) {
+int main(void) {
     unsigned int w1 = 0177777u, w2 = 0444u;
     
     unsigned int shift(unsigned int value, int n);
