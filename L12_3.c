@@ -1,24 +1,38 @@
 #include <stdio.h>
 
-unsigned int shift(unsigned int value, int n) {
-    if(n > 0)
-        value <<= n;
-    else
-        value >>= -n;
-
-    return value;
-}
-
 int main(void) {
-    unsigned int w1 = 0177777u, w2 = 0444u;
+    unsigned int w1 = 0xabcdef00u, w2 = 0xffff1122u;
     
-    unsigned int shift(unsigned int value, int n);
-
-    printf("%o\t%o\n", shift(w1, 5), w1 << 5);
-    printf("%o\t%o\n", shift(w1, -6), w1 >> 6);
-    printf("%o\t%o\n", shift(w2, 0), w2 >> 0);
-    printf("%o\n", shift(shift(w1, -3), 3));
+    unsigned int rotate(unsigned int value, int n);
+    
+    printf("%x\n", rotate(w1, 8));
+    printf("%x\n", rotate(w1, -16));
+    printf("%x\n", rotate(w2, 4));
+    printf("%x\n", rotate(w2, -2));
+    printf("%x\n", rotate(w1, 0));
+    printf("%x\n", rotate(w1, 44));
 
     return 0;
 }
 
+unsigned int rotate(unsigned int value, int n) {
+    unsigned int result, bits;
+    
+    if(n > 0)
+        n %= 32;
+    else
+        n = -(-n % 32);
+    if(n == 0)
+        result = value;
+    else
+        if(n > 0) {
+            bits = value >> (32 - n);
+            result = value << n | bits;
+        }
+        else {
+            n = -n;
+            bits = value << (32 - n);
+            result = value >> n | bits;
+        }
+    return result;
+}
