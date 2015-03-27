@@ -12,6 +12,8 @@ int main() {
         num /= 10;
     }
 
+    printf("\n");
+
     return 0;
 }
 
